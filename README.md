@@ -33,6 +33,56 @@ Tech Stack:
 -Lucide-React: Pour sa bibliothèque d'îcones.
 
 
+    Installation & Setup :
+
+- Avoir Node.js d'installé :
+```sh
+sudo apt install nodejs
+```
+
+Steps to Set Up Locally:
+
+- Cloner le Repository :
+```sh
+git@github.com:Ogcharlene/Au-Repere-Gourmand.git
+cd Au-Repere-Gourmand
+```
+
+- Installer les dependances:
+
+Serveur:
+```sh
+npm install
+```
+Installer/créer une App Next.js:
+```sh
+npx create-next-app@latest nom-du-projet --typescript
+```
+
+Installer TailwindCSS:
+```sh
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init
+```
+
+Installer sur dans le dossier du projet ShadCN UI:
+```sh
+npm install shadcn-ui
+```
+
+
+- Ouvrir le dossier sur VS Code:
+```sh
+code .
+```
+
+- Run le serveur:
+```sh
+npm run dev
+```
+Ouvrir le projet à l'adresse : " http://localhost:3000 "
+
+
 
 
 
