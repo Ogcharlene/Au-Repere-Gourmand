@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card"
+import { Download, DownloadIcon } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
@@ -7,11 +8,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 
 export function Carte (){
     return( 
 
-        <div id="CarouselMenu" className="flex mt-20 justify-center">
+        <div id="CarouselMenu" className="flex flex-col items-center mt-20 justify-center">
         <Carousel className="w-full max-w-sm">
       <CarouselContent>
         {/* menu 1 */}
@@ -58,6 +64,16 @@ export function Carte (){
       <CarouselPrevious />
       <CarouselNext />
     </Carousel>
+    <div className="mt-10">
+        <HoverCard>
+            <HoverCardTrigger>
+                <a href="/auRepereGourmandMenu.pdf" download><DownloadIcon /></a>
+            </HoverCardTrigger>
+            <HoverCardContent>
+                <p>Téléchargez le menu</p>
+            </HoverCardContent>
+        </HoverCard>
+    </div>
     </div>
     )
 }

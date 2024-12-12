@@ -1,102 +1,121 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectGroup,
-  SelectLabel
-} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
-import { Calendar } from "@/components/ui/calendar"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import { Button } from "./ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
-//type formulaire
-type FormData = {
-    firstName: string;
-    lastName: string;
-    mail: string;
-    hour: number;
-    guest: string;
+
+const Reservation: React.FC = () => {
+
+    //Type (tsx) pour l'état (state) de base:
+    const [firstName, setFirstName] = useState<string>("");
+    const [lastName, setLastName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [time, setTime] = useState<string>("");
+    const [date, setDate] = useState<string>("");
+    const [guests, setGuests] = useState<string>("");
+    const [confirmationMessage, setConfirmationMessage] = useState<string>("");
+
+
+    //changement des inputs
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => { //évênement qui change la valeur d'un input html
+        const {name, value} = e.target; //name = attribut de l'input HTML -> name="firsName"
+
+        if (name === "firstName") {
+            setFirstName(value);
+        } else if (name === "lastName") {
+            setLastName(value);
+        } else if (name === "email") {
+            setEmail(value);
+        } else if (name === "time") {
+            setTime(value);
+        }else if (name === "date") {
+            setDate(value);
+        } else if (name === "guests") {
+            setGuests(value);
+        }
+    };
+
+    //soumission du form (submit)
+    const handleSubmit = (e:FormEvent) => {
+        e.preventDefault();
+        console.log("firstName: ", firstName);
+        console.log("lastName: ", lastName);
+        console.log("email: ", email);
+        console.log("time: ", time);
+        console.log("date: ", date);
+        console.log("guests: ", guests);
+
+         const message = `Merci pour votre réservation, ${firstName} ! Nous vous attendons le ${date}. Au plaisir de vous régaler !`;
+
+        if (firstName != "" && lastName != "" && email != "" && time != "" && date != "" && guests != ""){
+            setConfirmationMessage(message);
+        }
+
+       
+
+        
+
+    };
+
+
+
+
+    return(
+        <div id="Reservation" className="Reservation flex flex-col items-center mt-20">
+            <Card>
+                <CardContent className="p-10">
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label>Votre prénom:</label>
+                            <Input type="text" name="firstName" value={firstName} onChange={handleChange} required></Input>
+                        </div>
+                        <div>
+                            <label>Votre nom:</label>
+                            <Input type="text" name="lastName" value={lastName} onChange={handleChange} required></Input>
+                        </div>
+                        <div>
+                            <label>Votre E-mail:</label>
+                            <Input type="email" name="email" value={email} onChange={handleChange} required></Input>
+                        </div>
+                        <div>
+                            <label>Heure de réservation:</label>
+                            <Input type="time" name="time" value={time} onChange={handleChange} required></Input>
+                        </div>
+                        <div>
+                            <label>Date de réservation:</label>
+                            <Input type="date" name="date" value={date} onChange={handleChange} required></Input>
+                        </div>
+                        <div>
+                            <label>Nombre de convive:</label>
+                            <Input type="number" name="guests" min="1" max="10" value={guests} onChange={handleChange} required></Input>
+                        </div>
+                        <Button onClick={handleSubmit} className="mt-5" type="submit"> Envoyer </Button>
+                    </form>
+                </CardContent>
+            </Card>
+                
+                {confirmationMessage && ( 
+                    <div className="mt-5">
+                        <p>{confirmationMessage}</p>
+                    </div>
+                )}
+            
+        </div>
+    );
 };
 
-
-
-export function Reservation() {
-    //on crée un objet du type FormData avec ses variables 'vide'
-    const [formData, setFormData] = useState<FormData>({
-        firstName: "",
-        lastName: "",
-        mail: "",
-        hour: 0,
-        guest: "",
-    })
-
-    //lorsqu'on appuis sur le bouton confirmer on affiche dans la console formDta
-    const onSubmit = () => {
-        console.log(formData)
-    }
-
-    return( 
-        <div id="reservation" className="flex flex-col items-center mt-20">
-        <Card>
-            <CardContent className="p-10">
-        <form>
-            <label>
-                Nom:
-                {/* setFormData va set une nouvelle valeur -> les ... veut dire je recup toute la donnée*/}
-                <Input type="name" placeholder="Nom" value={formData.lastName} onChange={(e) => setFormData({...formData, lastName: e.target.value})} required></Input>
-            </label>
-            <label>
-                Prénom:
-                <Input type="first name" placeholder="Prénom" value={formData.firstName} onChange={(e) => setFormData({...formData, firstName: e.target.value})} required></Input>
-            </label>
-            <label htmlFor="email">
-                Email:
-                <Input type="email" size={30} placeholder="mail@exemple.com" value={formData.mail} onChange={(e) => setFormData({...formData, mail: e.target.value})} required></Input>
-            </label>
-            <label>
-                Date de la réservation:
-                <Input type="date" value={"2024-12-11"} min={"2024-12-11"} max={"2040-12-11"}></Input>
-            </label>
-            <label>
-                Nombre de personne:
-                <Select>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Selectionnez"/>
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel></SelectLabel>
-                                <SelectItem value="1">1</SelectItem>
-                                <SelectItem value="2">2</SelectItem>
-                                <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">4</SelectItem>
-                                <SelectItem value="5">5</SelectItem>
-                                <SelectItem value="6">6</SelectItem>
-                                <SelectItem value="7">7</SelectItem>
-                                <SelectItem value="8">8</SelectItem>
-                                <SelectItem value="9">9</SelectItem>
-                                <SelectItem value="10">10</SelectItem>
-                        </SelectGroup>
-                </SelectContent>
-                </Select>
-        
-            </label>
-            <Button onClick={onSubmit}>Confirmer</Button>
-        </form>
-        </CardContent>
-        </Card>
-        </div>
-    )
-}
+export default Reservation;
 
 

@@ -27,10 +27,10 @@ export const Header = () => {
                           <MenubarTrigger><Button variant="outline"> <a href="#CarouselMenu"> La carte </a></Button></MenubarTrigger>
                         </MenubarMenu>
                         <MenubarMenu>
-                          <MenubarTrigger><Button variant="outline"> <a href="#reservation">Réserver une table</a></Button></MenubarTrigger>
+                          <MenubarTrigger><Button variant="outline"> <a href="#Reservation">Réserver une table</a></Button></MenubarTrigger>
                         </MenubarMenu>
                         <MenubarMenu>
-                          <MenubarTrigger><Button variant="outline"> <a href=""> Nous contacter</a></Button></MenubarTrigger>
+                          <MenubarTrigger><Button variant="outline"> <a href=""> Nous trouver / Nous contacter</a></Button></MenubarTrigger>
                         </MenubarMenu>
 
                     </MenubarMenu>
